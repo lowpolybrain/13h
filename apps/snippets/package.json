@@ -1,0 +1,21 @@
+{
+  "name": "@13h/snippets",
+  "description": "Snippets of 13H - demos and experiments",
+  "version": "0.0.1",
+  "scripts": {
+    "build": "snippet-builder index.ts",
+    "export": "parcel build index.html --dist-dir export",
+    "start": "parcel index.html"
+  },
+  "dependencies": {
+    "@13h/core": "0.0.1",
+    "@13h/filters": "0.0.1",
+    "@13h/gimmicks": "0.0.1",
+    "@13h/image": "0.0.1",
+    "@13h/preload": "0.0.1",
+    "@13h/snippet-builder": "0.0.1",
+    "@parcel/transformer-less": "^2.0.1",
+    "parcel": "^2.0.1",
+    "typescript": "^4.5.2"
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "name": "@13h/image",
+  "description": "13h library image support - sprites and stuff",
+  "version": "0.0.1",
+  "main": "build/index.js",
+  "types": "build/types.d.ts",
+  "scripts": {
+    "build": "lib-builder index.ts"
+  },
+  "dependencies": {
+    "@13h/core": "0.0.1"
+  },
+  "devDependencies": {
+    "@13h/lib-builder": "0.0.1"
+  }
+}

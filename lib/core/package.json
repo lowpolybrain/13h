@@ -1,0 +1,13 @@
+{
+  "name": "@13h/core",
+  "description": "Core of 13H library - a tool to draw oldskool stuff on canvas",
+  "version": "0.0.1",
+  "main": "build/index.js",
+  "types": "build/types.d.ts",
+  "scripts": {
+    "build": "lib-builder index.ts"
+  },
+  "devDependencies": {
+    "@13h/lib-builder": "0.0.1"
+  }
+}
