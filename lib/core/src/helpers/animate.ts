@@ -12,7 +12,7 @@ export type AnimateOptions = {
   // Repeat each frame
   frameRepeat?: number;
 
-  // How many frames to skip. If you provid 5 here - only every
+  // How many frames to skip. If you provide 5 here - only every
   // 5th call will be landed. Useful to slow stuff down
   frameSkip?: number;
 
@@ -28,17 +28,12 @@ declare global {
   }
 }
 
-export const animate = function (
-  nextFrame: AnimateMethod,
-  options: AnimateOptions = {}
-) {
+export const animate = function (nextFrame: AnimateMethod, options: AnimateOptions = {}) {
   let renderedFrame = 0;
 
   let frameSkipCounter = 0;
 
-  let setCleanup:
-    | ((cleanupNum: number) => void)
-    | undefined;
+  let setCleanup: ((cleanupNum: number) => void) | undefined;
 
   if (options.cleanupId) {
     if (!window._cdeCleanup) {
@@ -51,14 +46,15 @@ export const animate = function (
       }
     }
     setCleanup = (cleanupNum: number) => {
-      window._cdeCleanup[options.cleanupId] = cleanupNum;
+      if (window._cdeCleanup && options.cleanupId) {
+        window._cdeCleanup[options.cleanupId] = cleanupNum;
+      }
     };
   }
 
   const renderNextFrame = (time: number) => {
-    if (options.frameSkip > 0) {
-      frameSkipCounter =
-        (frameSkipCounter + 1) % options.frameSkip;
+    if (options.frameSkip != null && options.frameSkip > 0) {
+      frameSkipCounter = (frameSkipCounter + 1) % options.frameSkip;
       if (!frameSkipCounter) {
         nextFrame(renderedFrame++, time);
       }
@@ -67,7 +63,7 @@ export const animate = function (
     }
   };
 
-  if (options.initialSkip > 0) {
+  if (options.initialSkip != null && options.initialSkip > 0) {
     for (let i = 0; i < options.initialSkip; i++) {
       renderNextFrame(0);
     }

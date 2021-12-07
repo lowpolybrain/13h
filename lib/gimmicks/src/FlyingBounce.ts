@@ -5,7 +5,7 @@ export class FlyingBounce<Payload = never> {
   public speed: [number, number];
   public size: Point;
   public borderSize: Point;
-  public payload: Payload;
+  public payload?: Payload;
   public step: number = 0;
 
   constructor(speed?: PointArg, size: PointArg = 0.01, borderSize: PointArg = 1, startPos?: PointArg) {

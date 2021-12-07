@@ -13,7 +13,7 @@ export class EventListener<Args extends Array<unknown>> {
   ) {}
   handlers: EventHandler<Args>[] = [];
   addHandler(eh: EventHandler<Args>) {
-    if (this.fireOnAdd && this.timesFired > 0) {
+    if (this.fireOnAdd && this.timesFired > 0 && this.lastArgs) {
       eh.apply(this, this.lastArgs);
     }
     this.handlers.push(eh);
@@ -22,7 +22,7 @@ export class EventListener<Args extends Array<unknown>> {
   fire(...args: Args) {
     if (!this.happensOnce || this.timesFired === 0) {
       this.timesFired += 1;
-      this.lastArgs = this.lastArgs;
+      this.lastArgs = args;
       for (let i = 0; i < this.handlers.length; i++) {
         this.handlers[i].apply(this, args);
       }

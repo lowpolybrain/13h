@@ -1,4 +1,4 @@
-import { Image } from '@13h/image';
+import { Image } from '../image/src';
 
 type OnProgress = (image: Image, index: number, totalSuccess: number) => void;
 

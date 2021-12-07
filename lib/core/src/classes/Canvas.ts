@@ -2,17 +2,7 @@
 
 import { point } from '../helpers';
 
-import {
-  FillStyle,
-  Corner,
-  Corners,
-  LineCap,
-  StrokeStyle,
-  Point,
-  Shape,
-  PointArg,
-  Repeat
-} from '../types';
+import { FillStyle, Corner, Corners, LineCap, StrokeStyle, Point, Shape, PointArg, Repeat } from '../types';
 
 interface Text<P> {
   (text: string | number, pos?: Point, fill?: FillStyle): P;
@@ -20,12 +10,7 @@ interface Text<P> {
 }
 
 export class Canvas {
-  private strokeFill(
-    fillStyle: FillStyle,
-    lineWidth?: number,
-    strokeStyle?: StrokeStyle,
-    closePath?: boolean
-  ) {
+  private strokeFill(fillStyle?: FillStyle, lineWidth?: number, strokeStyle?: StrokeStyle, closePath?: boolean) {
     if (closePath) this.context.closePath();
     if (lineWidth) this.context.lineWidth = lineWidth;
     if (fillStyle) this.context.fillStyle = fillStyle;
@@ -36,8 +21,8 @@ export class Canvas {
 
   public element: HTMLCanvasElement;
   public context: CanvasRenderingContext2D;
-  private _size: Point;
-  private _center: Point;
+  private _size: Point = [0, 0];
+  private _center: Point = [0, 0];
   private _pivot: Point = [0, 0];
 
   public get pivot(): Point {
@@ -69,11 +54,8 @@ export class Canvas {
     return {
       [Corner.TopLeft]: [offset, offset],
       [Corner.TopRight]: [this.width - offset, offset],
-      [Corner.BottomRight]: [
-        this.width - offset,
-        this.height - offset
-      ],
-      [Corner.BottomLeft]: [offset, this.height - offset]
+      [Corner.BottomRight]: [this.width - offset, this.height - offset],
+      [Corner.BottomLeft]: [offset, this.height - offset],
     };
   }
 
@@ -84,7 +66,11 @@ export class Canvas {
   constructor(size?: PointArg, target?: HTMLElement) {
     const [width, height] = point.get(size);
     this.element = document.createElement('canvas');
-    this.context = this.element.getContext('2d');
+    const context = this.element.getContext('2d');
+    if (!context) {
+      throw new Error('Could not retrieve canvas context. Are you on web?');
+    }
+    this.context = context;
     this.setSize([width, height]);
 
     if (target) {
@@ -110,15 +96,11 @@ export class Canvas {
     return this;
   }
 
-  public setPivotCenter(): this {
+  public centerPivot(): this {
     return this.setPivot(this._center);
   }
 
-  public rect(
-    [x1, y1]: Point,
-    [x2, y2]: Point,
-    fill?: FillStyle
-  ): this {
+  public rect([x1, y1]: Point, [x2, y2]: Point, fill?: FillStyle): this {
     this.setFillStyle(fill);
     if (x1 !== x2 && y1 !== y2) {
       const sx = x1 < x2 ? x2 - x1 : x1 - x2;
@@ -130,11 +112,7 @@ export class Canvas {
     return this;
   }
 
-  public dot(
-    [x, y]: Point,
-    color?: FillStyle,
-    size: number = 1
-  ): this {
+  public dot([x, y]: Point, color?: FillStyle, size: number = 1): this {
     if (color) {
       this.context.fillStyle = color;
     }
@@ -182,11 +160,7 @@ export class Canvas {
     const [px, py] = this.pivot;
     destination.context.globalAlpha = alpha;
     if (!rotation && !scl && !rotation) {
-      destination.context.drawImage(
-        this.element,
-        x - px,
-        y - py
-      );
+      destination.context.drawImage(this.element, x - px, y - py);
     } else {
       if (x || y) {
         destination.context.translate(x, y);
@@ -206,31 +180,14 @@ export class Canvas {
     return this;
   }
 
-  public line(
-    a: PointArg,
-    b: PointArg,
-    color: FillStyle,
-    width: number = 1
-  ): this {
-    this.poly(
-      [point.get(a), point.get(b)],
-      'transparent',
-      width,
-      color,
-      false
-    );
+  public line(a: PointArg, b: PointArg, color: FillStyle, width: number = 1): this {
+    this.poly([point.get(a), point.get(b)], 'transparent', width, color, false);
     return this;
   }
 
-  public createPattern(
-    c: CanvasImageSource | Canvas,
-    repetition: Repeat = Repeat.XY
-  ) {
+  public createPattern(c: CanvasImageSource | Canvas, repetition: Repeat = Repeat.XY) {
     if (c instanceof Canvas) {
-      return this.context.createPattern(
-        c.element,
-        repetition
-      );
+      return this.context.createPattern(c.element, repetition);
     }
     return this.context.createPattern(c, repetition);
   }
@@ -252,20 +209,12 @@ export class Canvas {
       this.context.lineTo(shape[i][0], shape[i][1]);
     }
 
-    this.strokeFill(
-      fillStyle,
-      lineWidth,
-      strokeColor,
-      closePath
-    );
+    this.strokeFill(fillStyle, lineWidth, strokeColor, closePath);
 
     return this;
   }
 
-  public copy(
-    cropStart?: PointArg,
-    cropEnd?: PointArg
-  ): Canvas {
+  public copy(cropStart?: PointArg, cropEnd?: PointArg): Canvas {
     const [sx, sy] = point.get(cropStart);
     const [ex, ey] = point.get(cropEnd, this.size);
     const clone = new Canvas([ex - sx, ey - sy]);
@@ -273,17 +222,12 @@ export class Canvas {
     return clone;
   }
 
+  // TODO: Split this
   public get text(): Text<this> {
-    const that: typeof this = this;
-    let setTextAlign: CanvasRenderingContext2D['textAlign'] =
-      'start';
-    let setBaseLine: CanvasRenderingContext2D['textBaseline'] =
-      'top';
-    const textMaker = function (
-      text: string | number,
-      [x, y]: Point = [10, 10],
-      fill?: FillStyle
-    ) {
+    const that: Canvas = this;
+    let setTextAlign: CanvasRenderingContext2D['textAlign'] = 'start';
+    let setBaseLine: CanvasRenderingContext2D['textBaseline'] = 'top';
+    const textMaker = function (text: string | number, [x, y]: Point = [10, 10], fill?: FillStyle) {
       const oldTextAlign = that.context.textAlign;
       const oldTextBaseline = that.context.textBaseline;
       that.context.textAlign = setTextAlign;
@@ -300,7 +244,7 @@ export class Canvas {
         setTextAlign = 'center';
         setBaseLine = 'middle';
         return textMaker;
-      }
+      },
     });
 
     //@ts-expect-error TODO: Learn how to make defineProperty work TS way.

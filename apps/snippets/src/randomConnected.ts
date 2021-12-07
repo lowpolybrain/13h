@@ -32,7 +32,7 @@ animate((n: number) => {
         canvas.line(
           point.mul(a, canvas.size),
           point.mul(b, canvas.size),
-          color.rgb(128, 128, 255, 1 - dist / mdist),
+          color.rgb(128, 128, 128, 1 - dist / mdist),
           4
         );
       }

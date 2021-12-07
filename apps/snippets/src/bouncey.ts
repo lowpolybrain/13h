@@ -3,14 +3,18 @@ import {
   makeColorTransparent,
   setColorTransparency
 } from '@13h/filters';
-import { FlyingBounce } from '@13h/gimmicks';
-import { Image, FixedSprite } from '@13h/image';
+import { FlyingBounce } from '@13h/gimmicks/src';
+import { Image, FixedSprite } from '@13h/image/src';
 import { preloadImages } from '@13h/preload';
 
 import { makeCanvas, animate } from '../common/boilerplate';
 
+
+const img = new Image('../assets/105909.png');
+img.onError(console.log);
+
 preloadImages(
-  [new Image('../assets/105909.png')],
+  [img],
   ([sprite]) => {
     const canvas = makeCanvas(512);
 
@@ -48,7 +52,7 @@ preloadImages(
       canvas
         .fill('#111')
         .crisp()
-        .poly(canvas.getContour(true), null, 1, '#0f0');
+        .poly(canvas.getContour(true), undefined, 1, '#0f0');
 
       bounces.forEach((bounce) => {
         bounce.next();

@@ -1,2 +1,2 @@
 export * from './FlyingBounce';
-export * from './whiteNoise';
+export * from '../whiteNoise';

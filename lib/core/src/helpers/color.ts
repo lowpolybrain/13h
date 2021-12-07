@@ -40,8 +40,7 @@ export const color = {
     const aa = aaa / multipler;
     const baa = bbb / multipler;
     const [a, ba] = aa < baa ? [aa, baa] : [baa, aa];
-    const b = ba;
-    const d = (a + b) / 2;
+    const d = (a + ba) / 2;
     return d * multipler;
   },
   hsl(

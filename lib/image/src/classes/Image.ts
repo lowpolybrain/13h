@@ -8,8 +8,8 @@ export class Image {
   private _isReady: boolean = false;
   public element: HTMLImageElement;
 
-  private _size: Point;
-  private _center: Point;
+  private _size: Point = [0, 0];
+  private _center: Point = [0, 0];
   private _pivot: Point = [0, 0];
 
   public get pivot(): Point {
@@ -48,6 +48,7 @@ export class Image {
     return this._isReady;
   }
   onLoad = makeListener<[Image]>(true, true);
+  onError = makeListener<[ErrorEvent]>(true, true);
 
   constructor(private url: string, options: Partial<ImageOptions> = {}) {
     this.element = document.createElement('img');
@@ -62,6 +63,7 @@ export class Image {
       this._center = [width / 2, height / 2];
       this.onLoad.fire(this);
     });
+    this.element.addEventListener('error', (e) => this.onError.fire(e));
   }
 
   draw(destination: Canvas, [x, y]: Point = [0, 0], rotation?: number, scale: PointArg = 1, alpha: number = 1) {

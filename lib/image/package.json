@@ -5,7 +5,7 @@
   "main": "build/index.js",
   "types": "build/types.d.ts",
   "scripts": {
-    "build": "lib-builder index.ts"
+    "build": "lib-builder src/index.ts"
   },
   "dependencies": {
     "@13h/core": "0.0.1"

@@ -1,5 +1,5 @@
 import { Canvas } from '@13h/core';
-import { whiteNoise } from '@13h/gimmicks';
+import { whiteNoise } from '@13h/gimmicks/src';
 
 import { makeCanvas, animate } from '../common';
 

@@ -82,7 +82,7 @@ const makeShape = {
   },
 
   ngon(n: number = 3): Shape {
-    const points = [];
+    const points: Point[] = [];
     const step = TWO_PI / n;
     for (let i = 0; i < n; i += 1) {
       points.push([Math.sin(i * step), Math.cos(i * step)]);
