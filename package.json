@@ -1,0 +1,28 @@
+{
+  "name": "13h",
+  "version": "0.0.1",
+  "description": "BlaBla",
+  "main": "index.js",
+  "scripts": {
+    "build:lib-core": "cd packages/lib/core && npm run build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lowpolybrain/13h.git"
+  },
+  "keywords": [
+    "canvas"
+  ],
+  "author": "lowpolybrain <10@wp0.li>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/lowpolybrain/13h/issues"
+  },
+  "homepage": "https://github.com/lowpolybrain/13h#readme",
+  "workspaces": [
+    "packages/lib/core"
+  ],
+  "dependencies": {
+    "prettier": "^2.5.1"
+  }
+}
