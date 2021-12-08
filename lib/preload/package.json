@@ -2,8 +2,8 @@
   "name": "@13h/preload",
   "description": "13h library preloader - a tool to pre-load assets",
   "version": "0.0.1",
-  "main": "build/index.js",
-  "types": "build/index.d.ts",
+  "main": "build/13h.preload.js",
+  "types": "build/13h.preload.d.ts",
   "scripts": {
     "build": "rollup -c ../../rollup.config.js"
   }

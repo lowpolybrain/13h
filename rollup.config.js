@@ -1,9 +1,15 @@
 import dts from 'rollup-plugin-dts';
+import path from 'path';
 import typescript from 'rollup-plugin-typescript2';
 import { terser } from 'rollup-plugin-terser';
+import rimraf from 'rimraf';
 
-const name = 'index';
+const packageJson = require(path.resolve('./package.json'));
+const mainFileName = packageJson.main.replace(/.*\/([^\/]+)\.js$/, '$1');
+const typesFileName = packageJson.types ? packageJson.types.replace(/.*\/([^\/]+)\.d\.ts$/, '$1') : mainFileName;
 const buildFolder = 'build';
+
+rimraf('./build', () => {});
 
 const bundle = (config) => ({
   ...config,
@@ -16,7 +22,7 @@ export default [
     plugins: [terser(), typescript({ declarationDir: buildFolder })],
     output: [
       {
-        file: `${buildFolder}/${name}.min.js`,
+        file: `${buildFolder}/${mainFileName}.min.js`,
         format: 'cjs',
         sourcemap: false,
       },
@@ -26,7 +32,7 @@ export default [
     plugins: [typescript({ declarationDir: buildFolder })],
     output: [
       {
-        file: `${buildFolder}/${name}.js`,
+        file: `${buildFolder}/${mainFileName}.js`,
         format: 'cjs',
         sourcemap: true,
       },
@@ -35,7 +41,7 @@ export default [
   bundle({
     plugins: [dts()],
     output: {
-      file: `${buildFolder}/${name}.d.ts`,
+      file: `${buildFolder}/${typesFileName}.d.ts`,
       format: 'es',
     },
   }),

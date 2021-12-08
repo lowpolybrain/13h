@@ -2,8 +2,8 @@
   "name": "@13h/filters",
   "description": "Filters for 13h library - entire canvas manipulations",
   "version": "0.0.1",
-  "main": "build/index.js",
-  "types": "build/index.d.ts",
+  "main": "build/13h.filters.js",
+  "types": "build/13h.filters.d.ts",
   "scripts": {
     "build": "rollup -c ../../rollup.config.js"
   }

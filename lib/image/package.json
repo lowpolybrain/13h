@@ -2,8 +2,8 @@
   "name": "@13h/image",
   "description": "13h library image support - sprites and stuff",
   "version": "0.0.1",
-  "main": "build/index.js",
-  "types": "build/index.d.ts",
+  "main": "build/13h.image.js",
+  "types": "build/13h.image.d.ts",
   "scripts": {
     "build": "rollup -c ../../rollup.config.js"
   }

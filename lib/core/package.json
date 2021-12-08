@@ -2,8 +2,8 @@
   "name": "@13h/core",
   "description": "Core of 13H library - a tool to draw old school stuff on canvas",
   "version": "0.0.1",
-  "main": "build/index.js",
-  "types": "build/index.d.ts",
+  "main": "build/13h.core.js",
+  "types": "build/13h.core.d.ts",
   "scripts": {
     "build": "rollup -c ../../rollup.config.js"
   }
