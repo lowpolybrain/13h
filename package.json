@@ -3,8 +3,10 @@
   "version": "0.0.1",
   "description": "BlaBla",
   "main": "index.js",
+  "type": "module",
   "scripts": {
-    "build:lib-core": "cd packages/lib/core && npm run build"
+    "link": "node util link",
+    "build-libs": "node util build-lib"
   },
   "repository": {
     "type": "git",
@@ -19,10 +21,30 @@
     "url": "https://github.com/lowpolybrain/13h/issues"
   },
   "homepage": "https://github.com/lowpolybrain/13h#readme",
-  "workspaces": [
-    "packages/lib/core"
-  ],
   "dependencies": {
-    "prettier": "^2.5.1"
+    "esbuild": "^0.14.2",
+    "glob": "^7.2.0",
+    "glob-promise": "^4.2.2",
+    "minimist": "^1.2.5",
+    "prettier": "^2.5.1",
+    "rimraf": "^3.0.2",
+    "rollup": "^2.60.2",
+    "rollup-plugin-dts": "^4.0.1",
+    "rollup-plugin-esbuild": "^4.7.2",
+    "rollup-plugin-terser": "^7.0.2",
+    "rollup-plugin-typescript2": "^0.31.1",
+    "typescript": "^4.5.2"
+  },
+  "exports": {
+    "@13h/core": "./lib/core",
+    "@13h/filters": "./lib/filters",
+    "@13h/gimmicks": "./lib/gimmicks",
+    "@13h/image": "./lib/image",
+    "@13h/preload": "./lib/preload"
+  },
+  "13h": {
+    "linkedFolders": [
+      "$lib/*"
+    ]
   }
 }

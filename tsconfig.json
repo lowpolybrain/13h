@@ -1,5 +1,6 @@
 {
   "compilerOptions": {
+    "baseUrl": ".",
     "module": "ESNext",
     "jsx": "preserve",
     "esModuleInterop": true,
@@ -7,13 +8,30 @@
     "noImplicitAny": true,
     "noEmitOnError": true,
     "strict": true,
-    "declaration": true,
+    "declaration": false,
     "allowJs": true,
     "lib": [
       "es2017",
       "dom"
     ],
-    "target": "es6",
-    "moduleResolution": "node"
+    "target": "esnext",
+    "moduleResolution": "node",
+    "paths": {
+      "@13h/core": [
+        "./lib/core"
+      ],
+      "@13h/filters": [
+        "./lib/filters"
+      ],
+      "@13h/gimmicks": [
+        "./lib/gimmicks"
+      ],
+      "@13h/image": [
+        "./lib/image"
+      ],
+      "@13h/preload": [
+        "./lib/preload"
+      ]
+    }
   }
 }

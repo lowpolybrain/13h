@@ -1,0 +1,10 @@
+{
+  "name": "@13h/gimmicks",
+  "description": "13h library gimmicks - just a bunch of random stuff and shorthands",
+  "version": "0.0.1",
+  "main": "build/index.js",
+  "types": "build/index.d.ts",
+  "scripts": {
+    "build": "rollup -c ../../rollup.config.js"
+  }
+}
