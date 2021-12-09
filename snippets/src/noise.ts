@@ -10,6 +10,7 @@ const noise = new Canvas(100);
 animate(() => {
   whiteNoise(noise);
   const pattern = canvas.createPattern(noise);
-
-  canvas.fill(pattern);
+  if (pattern) {
+    canvas.fill(pattern);
+  }
 });

@@ -9,7 +9,6 @@ import { preloadImages } from '@13h/preload';
 
 import { makeCanvas, animate } from '../common';
 
-
 const img = new Image('../assets/105909.png');
 img.onError(console.log);
 

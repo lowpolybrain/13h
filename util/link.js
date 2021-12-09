@@ -27,7 +27,7 @@ const execute = async () => {
   for (const lib of libs) {
     logDebug(` will link ${lib.name} from ${lib.relativePath}`);
     exports[lib.name] = lib.relativePath;
-    paths[lib.name] = lib.relativePath;
+    paths[lib.name] = [lib.relativePath + '/src/index.ts'];
   }
 
   const tsconfig = await readJsonFile('tsconfig.json');

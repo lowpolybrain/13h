@@ -18,19 +18,19 @@
     "moduleResolution": "node",
     "paths": {
       "@13h/core": [
-        "./lib/core"
+        "./lib/core/src/index.ts"
       ],
       "@13h/filters": [
-        "./lib/filters"
+        "./lib/filters/src/index.ts"
       ],
       "@13h/gimmicks": [
-        "./lib/gimmicks"
+        "./lib/gimmicks/src/index.ts"
       ],
       "@13h/image": [
-        "./lib/image"
+        "./lib/image/src/index.ts"
       ],
       "@13h/preload": [
-        "./lib/preload"
+        "./lib/preload/src/index.ts"
       ]
     }
   }

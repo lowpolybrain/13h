@@ -185,11 +185,14 @@ export class Canvas {
     return this;
   }
 
-  public createPattern(c: CanvasImageSource | Canvas, repetition: Repeat = Repeat.XY) {
+  public createPattern(c: CanvasImageSource | Canvas, repetition: Repeat = Repeat.XY): CanvasPattern | null {
+    let element: CanvasImageSource;
     if (c instanceof Canvas) {
-      return this.context.createPattern(c.element, repetition);
+      element = c.element;
+    } else {
+      element = c;
     }
-    return this.context.createPattern(c, repetition);
+    return this.context.createPattern(element, repetition);
   }
 
   public poly(

@@ -14,7 +14,7 @@ import { animate, makeCanvas} from '../common';
 const canvas = makeCanvas(512);
 
 const letter = new Canvas(50);
-letter.setPivotCenter();
+letter.centerPivot();
 
 animate((n: number) => {
   const dp = point.floor([
@@ -34,7 +34,7 @@ animate((n: number) => {
   canvas
     .fill('#111')
     .crisp()
-    .poly(canvas.getContour(true), null, 1, '#0f0');
+    .poly(canvas.getContour(true), undefined, 1, '#0f0');
 
   ngon.shape.forEach((pnt, i) => {
     const t = (i / s) * TWO_PI;
@@ -47,7 +47,7 @@ animate((n: number) => {
         .rotate(rot * 10)
         .translate(canvas.center)
         .translate(pnt).shape,
-      null,
+      undefined,
       4,
       color.hsl(i * (360 / s) - n)
     );

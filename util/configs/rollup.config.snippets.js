@@ -13,15 +13,14 @@ const bundle = (config) => ({
 const files = glob.sync('../snippets/src/*.ts');
 
 const bundles = files.map(fileName => {
-  const fullFileName = path.resolve(fileName);
-  console.log(fullFileName);
+  const fileNameWithoutExtension = path.basename(fileName, '.ts');
   return bundle({
     plugins: [typescript()],
     input: fileName,
     output: [
       {
-        file: fileName.replace(/\.ts$/, '.js'),
-        format: 'cjs',
+        file: `./dist/js/${fileNameWithoutExtension}.js`,
+        format: 'amd',
         sourcemap: true,
       },
     ],

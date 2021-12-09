@@ -17,23 +17,23 @@ const bounces = new Array(64)
       .rewind(120);
   });
 
-animate((n: number) => {
+animate(() => {
   canvas.fill('#111');
 
   bounces.forEach((bounce) => bounce.next());
 
   const bnc = [...bounces];
-  let bounce: FlyingBounce<number>;
+  let bounce: FlyingBounce<number> | undefined;
 
   const dst = canvas.width / 3;
 
   //eslint-disable-next-line no-cond-assign
   while ((bounce = bnc.pop())) {
     const from = bounce.position;
-    const fromColor = bounce.payload;
+    const fromColor = bounce.payload || 0;
     for (let i = 0; i < bnc.length; i++) {
       const to = bnc[i].position;
-      const toColor = bnc[i].payload;
+      const toColor = bnc[i].payload || 0;
       const dif = color.hueBetween(
         fromColor,
         toColor,

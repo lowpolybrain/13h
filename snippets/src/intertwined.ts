@@ -23,7 +23,7 @@ animate((n: number) => {
   bounces.forEach((bounce) => bounce.next());
 
   bounces.forEach((bounce) => {
-    const clr = color.hsl(bounce.payload * RAD_TO_DEG);
+    const clr = color.hsl((bounce.payload || 0) * RAD_TO_DEG);
     canvas.dot(bounce.position, clr, 4);
   });
 });
