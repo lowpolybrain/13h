@@ -3,11 +3,11 @@ import {
   makeColorTransparent,
   setColorTransparency
 } from '@13h/filters';
-import { FlyingBounce } from '@13h/gimmicks/src';
-import { Image, FixedSprite } from '@13h/image/src';
+import { FlyingBounce } from '@13h/gimmicks';
+import { Image, FixedSprite } from '@13h/image';
 import { preloadImages } from '@13h/preload';
 
-import { makeCanvas, animate } from '../common/boilerplate';
+import { makeCanvas, animate } from '../common';
 
 
 const img = new Image('../assets/105909.png');

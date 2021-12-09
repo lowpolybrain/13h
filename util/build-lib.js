@@ -1,7 +1,6 @@
 // This command (re)builds all the subpackages
 
 import glob from 'glob-promise';
-import path from 'path';
 import { replacePatterns, logDebug, spawn, getPackageJson, writeJsonFile } from './inc/index.js';
 
 const execute = async () => {

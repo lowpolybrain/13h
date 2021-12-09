@@ -1,7 +1,7 @@
 import { TWO_PI, point, color, RAD_TO_DEG } from '@13h/core';
-import { FlyingBounce } from '@13h/gimmicks/src';
+import { FlyingBounce } from '@13h/gimmicks';
 
-import { makeCanvas, animate } from '../common/boilerplate';
+import { makeCanvas, animate } from '../common';
 
 const res = 3;
 

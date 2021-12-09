@@ -2,7 +2,7 @@
 
 import glob from 'glob-promise';
 import path from 'path';
-import { replacePatterns, logDebug, readJsonFile, getPackageJson, writeJsonFile } from './inc/index.js';
+import { replacePatterns, logDebug, readJsonFile, getPackageJson, writeJsonFile, loadLib } from './inc/index.js';
 
 const execute = async () => {
   const mainPkg = await getPackageJson();
@@ -17,18 +17,22 @@ const execute = async () => {
 
   const exports = {};
   const paths = {};
+
+  const libs = [];
+
   for (const folder of matchedFolders) {
-    const pkg = await getPackageJson(folder);
-    const rel = path.relative('.', folder);
-    logDebug(` Found ${pkg.name} at ${rel}`);
-    exports[pkg.name] = `./${rel}`;
-    paths[pkg.name] = [`./${rel}`];
+    libs.push(await loadLib(folder));
+  }
+
+  for (const lib of libs) {
+    logDebug(` will link ${lib.name} from ${lib.relativePath}`);
+    exports[lib.name] = lib.relativePath;
+    paths[lib.name] = lib.relativePath;
   }
 
   const tsconfig = await readJsonFile('tsconfig.json');
   tsconfig.compilerOptions.paths = paths;
   writeJsonFile('tsconfig.json', tsconfig);
-
 
   const originalExports = mainPkg.exports || {};
   mainPkg.exports = { ...originalExports, ...exports };

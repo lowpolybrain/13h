@@ -5,6 +5,6 @@
   "main": "build/13h.image.js",
   "types": "build/13h.image.d.ts",
   "scripts": {
-    "build": "rollup -c ../../rollup.config.js"
+    "build": "rollup -c ../../util/configs/rollup.config.lib.js"
   }
 }

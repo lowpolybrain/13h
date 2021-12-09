@@ -5,6 +5,10 @@ import { terser } from 'rollup-plugin-terser';
 import rimraf from 'rimraf';
 
 const packageJson = require(path.resolve('./package.json'));
+const parentPackage = require(path.resolve('../../package.json'));
+
+const libs = Object.keys(parentPackage.exports);
+
 const mainFileName = packageJson.main.replace(/.*\/([^\/]+)\.js$/, '$1');
 const typesFileName = packageJson.types ? packageJson.types.replace(/.*\/([^\/]+)\.d\.ts$/, '$1') : mainFileName;
 const buildFolder = 'build';
@@ -14,7 +18,7 @@ rimraf('./build', () => {});
 const bundle = (config) => ({
   ...config,
   input: './src/index.ts',
-  external: ['@13h/core'],
+  external: libs,
 });
 
 export default [
@@ -28,7 +32,7 @@ export default [
       },
     ],
   }),
-    bundle({
+  bundle({
     plugins: [typescript({ declarationDir: buildFolder })],
     output: [
       {
