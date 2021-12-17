@@ -1,20 +1,30 @@
 import { Point, PointArg } from '../types';
 
-const getPoint = function (
-  point: PointArg,
-  default_: Point = [0, 0]
-): Point {
+const getPoint = function (point: PointArg, default_: Point = [0, 0]): Point {
   if (point == null) {
     return [default_[0], default_[1]];
   }
-  return typeof point === 'number'
-    ? [point, point]
-    : [point[0], point[1]];
+  return typeof point === 'number' ? [point, point] : [point[0], point[1]];
 };
+
+export const clamp = (n: number, min: number, max: number) => Math.min(Math.max(n, min), max);
 
 // TODO: Maybe, split fns to "fast" and "handy".
 // Or maybe not (fast should be calculated separately then, without creating arrays)
 export const point = {
+  half: [0.5, 0.5] as Point,
+  zero: [0, 0] as Point,
+  one: [1, 1] as Point,
+
+  addHalf(point: Point, b: PointArg = 1): Point {
+    const [x, y] = getPoint(b);
+    return [point[0] + x / 2, point[1] + y / 2];
+  },
+  insideRegion(point: Point, topLeft: PointArg, bottomRight: PointArg): boolean {
+    const [sx, sy] = getPoint(topLeft);
+    const [ex, ey] = getPoint(bottomRight);
+    return point[0] >= sx && point[0] <= ex && point[1] >= sy && point[1] <= ey;
+  },
   round(point: Point): Point {
     return [Math.round(point[0]), Math.round(point[1])];
   },
@@ -68,11 +78,7 @@ export const point = {
 
   get: getPoint,
 
-  scale(
-    [x, y]: Point,
-    scale: PointArg,
-    pivot?: PointArg
-  ): Point {
+  scale([x, y]: Point, scale: PointArg, pivot?: PointArg): Point {
     const [sx, sy] = getPoint(scale);
     const [px, py] = getPoint(pivot);
     return [(x - px) * sx + py, (y - py) * sy + py];
@@ -83,27 +89,32 @@ export const point = {
     return [x % bx, y % by];
   },
 
-  rotate(
-    [x, y]: Point,
-    angle: number,
-    pivot?: PointArg
-  ): Point {
+  rotate([x, y]: Point, angle: number, pivot?: PointArg): Point {
     const [px, py] = getPoint(pivot || [0, 0]);
     const sin = Math.sin(angle);
     const cos = Math.cos(angle);
-    return [
-      sin * (x - px) + cos * (y - py) + px,
-      sin * (y - py) - cos * (x - px) + py
-    ];
+    return [sin * (x - px) + cos * (y - py) + px, sin * (y - py) - cos * (x - px) + py];
   },
 
-  sizeToScale(
-    currentSize: PointArg,
-    targetSize: PointArg
-  ): Point {
+  sizeToScale(currentSize: PointArg, targetSize: PointArg): Point {
     const cs = point.get(currentSize);
     if (cs[0] === 0 || cs[1] === 0) return [0, 0];
     const ts = point.get(targetSize);
     return [ts[0] / cs[0], ts[1] / cs[1]];
-  }
+  },
+
+  clamp([x, y]: Point, [mnx, mny]: Point, [mxx, mxy]: Point): Point {
+    return [clamp(x, mnx, mxx), clamp(y, mny, mxy)];
+  },
+
+  eq(...points: PointArg[]): boolean {
+    if (points.length === 1) return true;
+    for (let i = 1; i < points.length; i++) {
+      const p = getPoint(points[i]);
+      if (p[i] !== p[0]) {
+        return false;
+      }
+    }
+    return true;
+  },
 };

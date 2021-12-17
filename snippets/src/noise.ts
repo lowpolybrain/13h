@@ -1,6 +1,8 @@
 import { Canvas } from '@13h/core';
 import { whiteNoise } from '@13h/gimmicks';
 
+console.log('Hello');
+
 import { makeCanvas, animate } from '../common';
 
 const canvas = makeCanvas(512);

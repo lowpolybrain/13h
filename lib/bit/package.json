@@ -1,0 +1,10 @@
+{
+  "name": "@13h/bit",
+  "description": "13h bit gimmicks - A set of stuff to work with tiny pixel things",
+  "version": "0.0.1",
+  "main": "build/13h.gimmicks.js",
+  "types": "build/13h.gimmicks.d.ts",
+  "scripts": {
+    "build": "rollup -c ../../util/configs/rollup.config.lib.js"
+  }
+}

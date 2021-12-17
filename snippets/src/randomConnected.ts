@@ -2,15 +2,11 @@ import { point, random, color } from '@13h/core';
 import { makeCanvas, animate } from '../common';
 
 const canvas = makeCanvas(1024);
-canvas.element.style.filter =
-  'blur(40px) brightness(2) contrast(140%) saturate(150%)';
+canvas.element.style.filter = 'blur(40px) brightness(2) contrast(140%) saturate(150%)';
 
 const points: [number, number][] = new Array(50)
   .fill(0)
-  .map((_, index, all) => [
-    random.m32(index),
-    random.m32(index + all.length)
-  ]);
+  .map((_, index, all) => [random.m32(index), random.m32(index + all.length)]);
 
 animate((n: number) => {
   canvas.fill('#111');

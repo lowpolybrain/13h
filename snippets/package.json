@@ -3,7 +3,11 @@
   "description": "Snippets of 13H - demos and experiments",
   "version": "0.0.1",
   "scripts": {
-    "build": "rollup -c ../util/configs/rollup.config.snippets.js",
-    "build-watch": "rollup -c ../util/configs/rollup.config.snippets.js --watch"
+    "build": "run-p build-js build-less",
+    "build-js": "rollup -c ../util/configs/rollup.config.snippets.js",
+    "build-watch-js": "rollup -c ../util/configs/rollup.config.snippets.js --watch",
+    "build-assets": "gulp build",
+    "build-watch-assets": "",
+    "start-nws": "nws -v -d ./dist"
   }
 }

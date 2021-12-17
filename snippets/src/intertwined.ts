@@ -5,17 +5,11 @@ import { makeCanvas, animate } from '../common';
 
 const canvas = makeCanvas(256);
 
-const bounces = new Array(128)
-  .fill(0)
-  .map((_, index, all) => {
-    const rot = (index / all.length) * TWO_PI + 0.1;
-    const speed = FlyingBounce.speedDirection(2, rot);
-    return new FlyingBounce<number>(
-      speed,
-      1,
-      canvas.width
-    ).setPayload(rot);
-  });
+const bounces = new Array(128).fill(0).map((_, index, all) => {
+  const rot = (index / all.length) * TWO_PI + 0.1;
+  const speed = FlyingBounce.speedDirection(2, rot);
+  return new FlyingBounce<number>(speed, 1, canvas.width).setPayload(rot);
+});
 
 animate((n: number) => {
   canvas.fill('#11111105');

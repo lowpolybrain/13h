@@ -1,0 +1,10 @@
+{
+  "name": "@13h/controls",
+  "description": "Simple gimmicks to work with keyboard and mouse with 13h.",
+  "version": "0.0.1",
+  "main": "build/13h.controls.js",
+  "types": "build/13h.controls.d.ts",
+  "scripts": {
+    "build": "rollup -c ../../util/configs/rollup.config.lib.js"
+  }
+}

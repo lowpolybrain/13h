@@ -6,11 +6,7 @@ const canvas = makeCanvas(256);
 const draw = () => {
   let pos = 104;
   const test = (from: number, to: number) => {
-    canvas.text(
-      `${from}:${to}=${color.hueBetween(from, to)}`,
-      [10, pos],
-      '#fff'
-    );
+    canvas.text(`${from}:${to}=${color.hueBetween(from, to)}`, [10, pos], '#fff');
     pos += 10;
   };
 
@@ -32,11 +28,7 @@ const draw = () => {
     const clrBetween = color.hsl(diff);
 
     canvas.rect([i, 32], [i + step / 2, 64], clrFrom);
-    canvas.rect(
-      [i + step / 2, 32],
-      [i + step, 64],
-      clrBetween
-    );
+    canvas.rect([i + step / 2, 32], [i + step, 64], clrBetween);
   }
 
   for (let i = canvas.width; i >= 0; i -= step) {
@@ -49,11 +41,7 @@ const draw = () => {
     const clrBetween = color.hsl(diff);
 
     canvas.rect([i, 64], [i + step / 2, 96], clrFrom);
-    canvas.rect(
-      [i + step / 2, 64],
-      [i + step, 96],
-      clrBetween
-    );
+    canvas.rect([i + step / 2, 64], [i + step, 96], clrBetween);
   }
 
   test(45, 135);

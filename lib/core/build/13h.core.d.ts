@@ -1,6 +1,6 @@
 declare type Point = Readonly<[number, number]>;
 declare type Points = Readonly<Point[]>;
-declare type PointArg = Point | number | undefined;
+declare type PointArg = Point | number | undefined | [number, number];
 
 declare type Shape = Readonly<Point[]>;
 

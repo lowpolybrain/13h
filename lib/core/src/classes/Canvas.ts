@@ -22,6 +22,7 @@ export class Canvas {
   public element: HTMLCanvasElement;
   public context: CanvasRenderingContext2D;
   private _size: Point = [0, 0];
+  private _maxPoint: Point = [0, 0];
   private _center: Point = [0, 0];
   private _pivot: Point = [0, 0];
 
@@ -31,6 +32,10 @@ export class Canvas {
 
   public get size(): Point {
     return this._size;
+  }
+
+  public get maxPoint(): Point {
+    return this._maxPoint;
   }
 
   public get height(): number {
@@ -85,6 +90,7 @@ export class Canvas {
 
   public setSize([width, height]: Point): this {
     this._size = [width, height];
+    this._maxPoint = [width ? width - 1 : 0, height ? height - 1 : 0];
     this._center = [width / 2, height / 2];
     this.element.width = width;
     this.element.height = height;

@@ -1,15 +1,6 @@
-import {
-  Canvas,
-  point,
-  osc,
-  shape,
-  DEG_TO_RAD,
-  RAD_TO_DEG,
-  TWO_PI,
-  color
-} from '@13h/core';
+import { Canvas, point, osc, shape, DEG_TO_RAD, RAD_TO_DEG, TWO_PI, color } from '@13h/core';
 
-import { animate, makeCanvas} from '../common';
+import { animate, makeCanvas } from '../common';
 
 const canvas = makeCanvas(512);
 
@@ -17,10 +8,7 @@ const letter = new Canvas(50);
 letter.centerPivot();
 
 animate((n: number) => {
-  const dp = point.floor([
-    osc.sin(n / 25, canvas.width - 50) + 25,
-    osc.cos(n / 25, canvas.width - 50) + 25
-  ]);
+  const dp = point.floor([osc.sin(n / 25, canvas.width - 50) + 25, osc.cos(n / 25, canvas.width - 50) + 25]);
 
   const rot = (n / 200) % TWO_PI;
 
@@ -31,10 +19,7 @@ animate((n: number) => {
     .scale(canvas.width / 4)
     .rotate(rot * 9);
 
-  canvas
-    .fill('#111')
-    .crisp()
-    .poly(canvas.getContour(true), undefined, 1, '#0f0');
+  canvas.fill('#111').crisp().poly(canvas.getContour(true), undefined, 1, '#0f0');
 
   ngon.shape.forEach((pnt, i) => {
     const t = (i / s) * TWO_PI;
@@ -55,10 +40,6 @@ animate((n: number) => {
 
   letter
     .clear()
-    .text.center(
-      Math.floor(rot * RAD_TO_DEG),
-      letter.center,
-      '#fff'
-    )
+    .text.center(Math.floor(rot * RAD_TO_DEG), letter.center, '#fff')
     .draw(canvas, dp, rot, osc.sin(n / 40, 5) + 1);
 });

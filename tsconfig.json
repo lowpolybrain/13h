@@ -17,6 +17,9 @@
     "target": "esnext",
     "moduleResolution": "node",
     "paths": {
+      "@13h/controls": [
+        "./lib/controls/src/index.ts"
+      ],
       "@13h/core": [
         "./lib/core/src/index.ts"
       ],

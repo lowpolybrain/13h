@@ -8,3 +8,4 @@ node_modules/
 snippets/dist
 snippets/html
 .parcel-cache
+**/.package-lock.json

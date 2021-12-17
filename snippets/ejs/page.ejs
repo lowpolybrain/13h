@@ -7,14 +7,10 @@
       content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"
     />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <title>13H snippets</title>
+    <title><%= page.title %></title>
+    <link rel='stylesheet' href='../css/style.css'/>
   </head>
-  <body>
-  <ul>
-    <% snippets.forEach(function(snippet){ %>
-      <li><a href="./html/<%= snippet.fileName%>.html"><%= snippet.name %></a></li>
+  <body></body>
+    <% scripts.forEach(function(script){ %><script src="<%= script %>" type="text/javascript"></script>
     <% }); %>
-  </ul>
-
-  </body>
 </html>
