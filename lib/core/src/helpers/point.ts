@@ -29,10 +29,10 @@ export const point = {
     return [Math.round(point[0]), Math.round(point[1])];
   },
   floor(point: Point): Point {
-    return [Math.round(point[0]), Math.floor(point[1])];
+    return [Math.floor(point[0]), Math.floor(point[1])];
   },
   ceil(point: Point): Point {
-    return [Math.round(point[0]), Math.ceil(point[1])];
+    return [Math.ceil(point[0]), Math.ceil(point[1])];
   },
   add(...args: PointArg[]): Point {
     let sx = 0;
@@ -109,9 +109,10 @@ export const point = {
 
   eq(...points: PointArg[]): boolean {
     if (points.length === 1) return true;
+    const firstPoint = getPoint(points[0]);
     for (let i = 1; i < points.length; i++) {
       const p = getPoint(points[i]);
-      if (p[i] !== p[0]) {
+      if (p[0] !== firstPoint[0] || p[1] !== firstPoint[1]) {
         return false;
       }
     }

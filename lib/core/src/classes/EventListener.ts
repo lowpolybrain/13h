@@ -1,6 +1,4 @@
-type EventHandler<Args extends Array<unknown>> = (
-  ...args: Args
-) => void;
+type EventHandler<Args extends Array<unknown>> = (this: EventListener<Args>, ...args: Args) => void;
 
 export class EventListener<Args extends Array<unknown>> {
   private timesFired: number = 0;
@@ -24,22 +22,17 @@ export class EventListener<Args extends Array<unknown>> {
       this.timesFired += 1;
       this.lastArgs = args;
       for (let i = 0; i < this.handlers.length; i++) {
-        this.handlers[i].apply(this, args);
+        this.handlers[i]?.apply(this, args);
       }
     }
   }
 }
 
-export const makeListener = function <
-  Args extends Array<unknown>
->(
+export const makeListener = function <Args extends Array<unknown>>(
   fireOnAdd: boolean = false,
   happensOnce: boolean = false
 ) {
-  const listener = new EventListener<Args>(
-    fireOnAdd,
-    happensOnce
-  );
+  const listener = new EventListener<Args>(fireOnAdd, happensOnce);
   const adder = function (handler: EventHandler<Args>) {
     listener.addHandler(handler);
   };

@@ -55,7 +55,8 @@
     "@13h/gimmicks": "./lib/gimmicks",
     "@13h/image": "./lib/image",
     "@13h/preload": "./lib/preload",
-    "@13h/controls": "./lib/controls"
+    "@13h/controls": "./lib/controls",
+    "@13h/bit": "./lib/bit"
   },
   "13h": {
     "linkedFolders": [

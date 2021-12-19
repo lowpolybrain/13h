@@ -29,19 +29,19 @@ export const color = {
   hueBetween(
     fromInDeg: number,
     toInDeg: number,
-    multipler: number = 360
+    multiplier: number = 360
   ): number {
     const aaa =
-      fromInDeg > multipler
-        ? fromInDeg % multipler
+      fromInDeg > multiplier
+        ? fromInDeg % multiplier
         : fromInDeg;
     const bbb =
-      toInDeg > multipler ? toInDeg % multipler : toInDeg;
-    const aa = aaa / multipler;
-    const baa = bbb / multipler;
+      toInDeg > multiplier ? toInDeg % multiplier : toInDeg;
+    const aa = aaa / multiplier;
+    const baa = bbb / multiplier;
     const [a, ba] = aa < baa ? [aa, baa] : [baa, aa];
     const d = (a + ba) / 2;
-    return d * multipler;
+    return d * multiplier;
   },
   hsl(
     hueInDeg: number = 0,

@@ -11,13 +11,12 @@ img.onError(console.log);
 
 preloadImages([img], ([sprite]) => {
   const canvas = makeCanvas(512);
-
-  const canva = sprite.createCanvas([0, 16], [16 * 6, 32]);
-  setColorTransparency(canva, getColor(canva, [12, 14]), 0.5);
-  makeColorTransparent(canva, getColor(canva, 0));
+  const spriteCanvas = sprite!.createCanvas([0, 16], [16 * 6, 32]);
+  setColorTransparency(spriteCanvas, getColor(spriteCanvas, [12, 14]), 0.5);
+  makeColorTransparent(spriteCanvas, getColor(spriteCanvas, 0));
 
   const as = 2;
-  const animation = new FixedSprite(canva, [16, 16]);
+  const animation = new FixedSprite(spriteCanvas, [16, 16]);
   const animationBounce = new FlyingBounce(FlyingBounce.randomDirection(5), 16 * as, canvas.size, canvas.center);
 
   const bounces = new Array(40).fill(0).map(() => {

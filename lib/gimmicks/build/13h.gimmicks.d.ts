@@ -18,4 +18,6 @@ declare class FlyingBounce<Payload = never> {
 
 declare const whiteNoise: (c: Canvas) => void;
 
-export { FlyingBounce, whiteNoise };
+declare const grid: (c: Canvas, size?: PointArg, color?: string, width?: number) => void;
+
+export { FlyingBounce, grid, whiteNoise };

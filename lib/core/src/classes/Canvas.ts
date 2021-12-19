@@ -208,7 +208,10 @@ export class Canvas {
     strokeColor?: FillStyle,
     closePath: boolean = true,
     lineCap: LineCap = LineCap.Butt
-  ) {
+  ): this {
+    if (shape.length <= 1) {
+      return this;
+    }
     this.context.lineCap = lineCap;
 
     this.context.beginPath();

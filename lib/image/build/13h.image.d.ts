@@ -1,3 +1,4 @@
+import * as _13h_core from '@13h/core';
 import { Point, Canvas, PointArg } from '@13h/core';
 
 declare type ImageOptions = {
@@ -20,11 +21,11 @@ declare class Image {
     setSize([width, height]: Point): this;
     get isReady(): boolean;
     onLoad: {
-        (handler: (args_0: Image) => void): void;
+        (handler: (this: _13h_core.EventListener<[Image]>, args_0: Image) => void): void;
         fire(args_0: Image): void;
     };
     onError: {
-        (handler: (args_0: ErrorEvent) => void): void;
+        (handler: (this: _13h_core.EventListener<[ErrorEvent]>, args_0: ErrorEvent) => void): void;
         fire(args_0: ErrorEvent): void;
     };
     constructor(url: string, options?: Partial<ImageOptions>);

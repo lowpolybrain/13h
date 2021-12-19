@@ -15,8 +15,12 @@ export class BitMap {
         imgData.data[i * 4 + 3] = color[3];
       }
     }
+    target.putImageData(imgData, x, y);
   }
   static fromNumber(num: number, size: Point): BitMap {
-    return new BitMap(numberToBits(num), size);
+    const signs = size[0] * size[1];
+    let bits = numberToBits(num);
+    const head = new Array(signs - bits.length).fill(0);
+    return new BitMap([...head, ...bits], size);
   }
 }

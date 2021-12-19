@@ -1,6 +1,6 @@
 declare type Point = Readonly<[number, number]>;
 declare type Points = Readonly<Point[]>;
-declare type PointArg = Point | number | undefined | [number, number];
+declare type PointArg = Point | number | undefined | number[];
 
 declare type Shape = Readonly<Point[]>;
 
@@ -47,10 +47,12 @@ declare class Canvas {
     element: HTMLCanvasElement;
     context: CanvasRenderingContext2D;
     private _size;
+    private _maxPoint;
     private _center;
     private _pivot;
     get pivot(): Point;
     get size(): Point;
+    get maxPoint(): Point;
     get height(): number;
     get width(): number;
     get cx(): number;
@@ -77,7 +79,7 @@ declare class Canvas {
     get text(): Text<this>;
 }
 
-declare type EventHandler<Args extends Array<unknown>> = (...args: Args) => void;
+declare type EventHandler<Args extends Array<unknown>> = (this: EventListener<Args>, ...args: Args) => void;
 declare class EventListener<Args extends Array<unknown>> {
     private fireOnAdd;
     private happensOnce;
@@ -154,7 +156,7 @@ declare const color: {
     lightMagenta: string;
     yellow: string;
     white: string;
-    hueBetween(fromInDeg: number, toInDeg: number, multipler?: number): number;
+    hueBetween(fromInDeg: number, toInDeg: number, multiplier?: number): number;
     hsl(hueInDeg?: number, saturationInPercent?: number, lightnessInPercent?: number, alpha?: number): string;
     hslRot(rotInRad: number): string;
     rgb(r255?: number, g255?: number, b255?: number, alpha?: number): string;
@@ -187,7 +189,13 @@ declare const makeShape: {
     ngon(n?: number): readonly (readonly [number, number])[];
 };
 
+declare const clamp: (n: number, min: number, max: number) => number;
 declare const point: {
+    half: readonly [number, number];
+    zero: readonly [number, number];
+    one: readonly [number, number];
+    addHalf(point: readonly [number, number], b?: PointArg): readonly [number, number];
+    insideRegion(point: readonly [number, number], topLeft: PointArg, bottomRight: PointArg): boolean;
     round(point: readonly [number, number]): readonly [number, number];
     floor(point: readonly [number, number]): readonly [number, number];
     ceil(point: readonly [number, number]): readonly [number, number];
@@ -202,6 +210,8 @@ declare const point: {
     mod([x, y]: readonly [number, number], b: PointArg): readonly [number, number];
     rotate([x, y]: readonly [number, number], angle: number, pivot?: PointArg): readonly [number, number];
     sizeToScale(currentSize: PointArg, targetSize: PointArg): readonly [number, number];
+    clamp([x, y]: readonly [number, number], [mnx, mny]: readonly [number, number], [mxx, mxy]: readonly [number, number]): readonly [number, number];
+    eq(...points: PointArg[]): boolean;
 };
 
 declare const random: {
@@ -211,4 +221,4 @@ declare const random: {
     m32p(xSeed: number, ySeed?: number): readonly [number, number];
 };
 
-export { AnimateMethod, AnimateOptions, Box, BoxPoint, CGA, Canvas, Corner, Corners, DEG_TO_RAD, EventListener, FillStyle, FontStyle, LineCap, PI_BY_TWO, Point, PointArg, Points, RAD_TO_DEG, REVISION, Repeat, SQR_TWO, Shape, StrokeStyle, TWO_PI, animate, color, getColor, makeListener, makeShape, osc, point, random, shape };
+export { AnimateMethod, AnimateOptions, Box, BoxPoint, CGA, Canvas, Corner, Corners, DEG_TO_RAD, EventListener, FillStyle, FontStyle, LineCap, PI_BY_TWO, Point, PointArg, Points, RAD_TO_DEG, REVISION, Repeat, SQR_TWO, Shape, StrokeStyle, TWO_PI, animate, clamp, color, getColor, makeListener, makeShape, osc, point, random, shape };
