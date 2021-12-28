@@ -26,6 +26,9 @@
       "@13h/core": [
         "./lib/core/src/index.ts"
       ],
+      "@13h/dom": [
+        "./lib/dom/src/index.ts"
+      ],
       "@13h/filters": [
         "./lib/filters/src/index.ts"
       ],

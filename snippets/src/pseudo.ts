@@ -1,6 +1,6 @@
 import { point, Point, random, SQR_TWO, osc, color } from '@13h/core';
 
-import { makeCanvas, animate } from '../common';
+import { makeCanvas, animate } from './inc/boilerplate';
 
 const canvas = makeCanvas(2048);
 const count = 10000;

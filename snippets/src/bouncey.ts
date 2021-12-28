@@ -4,7 +4,7 @@ import { FlyingBounce } from '@13h/gimmicks';
 import { Image, FixedSprite } from '@13h/image';
 import { preloadImages } from '@13h/preload';
 
-import { makeCanvas, animate } from '../common';
+import { makeCanvas, animate } from './inc/boilerplate';
 
 const img = new Image('../assets/105909.png');
 img.onError(console.log);

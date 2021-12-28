@@ -28,10 +28,15 @@ export class EventListener<Args extends Array<unknown>> {
   }
 }
 
+type Listener<Args extends Array<unknown>> = {
+  (handler: EventHandler<Args>): void;
+  fire: (...args: Args) => void;
+};
+
 export const makeListener = function <Args extends Array<unknown>>(
   fireOnAdd: boolean = false,
   happensOnce: boolean = false
-) {
+): Listener<Args> {
   const listener = new EventListener<Args>(fireOnAdd, happensOnce);
   const adder = function (handler: EventHandler<Args>) {
     listener.addHandler(handler);

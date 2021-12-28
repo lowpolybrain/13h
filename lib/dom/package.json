@@ -1,0 +1,10 @@
+{
+  "name": "@13h/dom",
+  "description": "13h dom tools - A set of CSS things and stuff",
+  "version": "0.0.1",
+  "main": "build/13h.dom.js",
+  "types": "build/13h.dom.d.ts",
+  "scripts": {
+    "build": "rollup -c ../../util/configs/rollup.config.lib.js"
+  }
+}

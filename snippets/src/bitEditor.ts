@@ -1,5 +1,6 @@
 import { Canvas, point } from '@13h/core';
 import { coordsToLocal } from '@13h/controls';
+import { createElement } from '@13h/dom';
 
 import { BinaryMatrix, BinaryMatrixEditor, Click, UiButton } from './bitEditorInc';
 
@@ -12,7 +13,7 @@ class UI {
     this.canvas = new Canvas([128, 128], document.body).crisp();
 
     this.canvas.element.style.transformOrigin = '0 0';
-    this.canvas.element.style.transform = 'scale(2)';
+    //this.canvas.element.style.transform = 'scale(2)';
 
     this.canvas.element.addEventListener('mousedown', this.handleMouseDown);
     this.canvas.element.addEventListener('mousemove', this.handleMouseMove);
@@ -76,14 +77,13 @@ class UI {
         this.render();
       }),
       new UiButton(point.add(this.fieldPos, [-20, -20]), '▣', () => {
-        this.matrixEditor.matrix.forEach((v, pos) => this.matrixEditor.matrix.set(pos, !v));
+        this.matrixEditor.matrix.invert();
         this.render();
       }),
       new UiButton(point.add(this.fieldPos, [-20, 80]), '×', () => {
-        this.matrixEditor.matrix.forEach((v, pos) => this.matrixEditor.matrix.set(pos, false));
+        this.matrixEditor.matrix.clear();
         this.render();
       }),
-
     ];
   }
 
@@ -106,7 +106,20 @@ class UI {
 }
 
 const matrix = new BinaryMatrix([7, 7]);
+matrix.setValueFromBits((437645398712547).toString(2));
 const editor = new BinaryMatrixEditor(matrix);
-matrix.onChange((mat) => console.log(parseInt(mat.valueToBits(), 2)));
 const ui = new UI(editor);
+ui.canvas.element.style.width = ui.canvas.width * 2 + 'px';
+ui.canvas.element.style.height = ui.canvas.height * 2 + 'px';
+
+
+const input = createElement('input').addTo(createElement('div').addTo(document.body));
+
+const renderCurrentState = (mat: BinaryMatrix) => (input.value = '' + parseInt(mat.valueToBits(), 2));
+matrix.onChange(renderCurrentState);
+renderCurrentState(matrix);
+// input.addEventListener('keydown', () => {
+//   matrix.setValueFromBits((parseInt(input.value, 10) || 0).toString(2));
+// });
+
 ui.render();

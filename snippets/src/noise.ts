@@ -3,7 +3,7 @@ import { whiteNoise } from '@13h/gimmicks';
 
 console.log('Hello');
 
-import { makeCanvas, animate } from '../common';
+import { makeCanvas, animate } from './inc/boilerplate';
 
 const canvas = makeCanvas(512);
 

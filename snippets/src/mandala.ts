@@ -1,6 +1,6 @@
 import { Canvas, point, osc, shape, DEG_TO_RAD, RAD_TO_DEG, TWO_PI, color } from '@13h/core';
 
-import { animate, makeCanvas } from '../common';
+import { animate, makeCanvas } from './inc/boilerplate';
 
 const canvas = makeCanvas(512);
 

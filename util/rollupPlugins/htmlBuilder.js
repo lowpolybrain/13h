@@ -5,13 +5,21 @@ import ejs from 'ejs';
 
 const defaultOption = {
   builder: {
-    listTemplate: './ejs/list.ejs',
-    pageTemplate: './ejs/page.ejs',
+    pageTemplate: '',
   },
   buildPage: {
     scripts: (page) => [page.scriptSrc],
-    output: (page) => `./dist/html/${page.scriptName}.html`,
+    output: (page) => ``,
   },
+};
+
+const getScripts = async (scriptArg, page) => {
+  if (typeof scriptArg === 'string') {
+    return scriptArg;
+  } else if (typeof scriptArg === 'function') {
+    return scriptArg(page);
+  }
+  return scriptArg;
 };
 
 const compileTemplate = async (templatePath) => {
@@ -42,17 +50,17 @@ export const create = (options = {}) => {
 
         const scriptName = path.basename(data.file, '.js');
 
-
         const page = {
           title: 'Page',
           scriptName,
           scriptSrc: data.file,
         };
 
-        const outputPath = path.resolve(await output(page));
+        const outputPath = path.resolve(typeof output === 'function' ? await output(page) : page);
+        console.log('Output path', outputPath);
         const dirname = path.dirname(outputPath);
 
-        const scriptList = await scripts(page);
+        const scriptList = await getScripts(scripts, page);
 
         fs.mkdir(dirname, { recursive: true });
         return fs.writeFile(outputPath, template({ page, scripts: scriptList }), 'utf-8');

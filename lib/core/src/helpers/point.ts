@@ -8,6 +8,10 @@ const getPoint = function (point: PointArg, default_: Point = [0, 0]): Point {
 };
 
 export const clamp = (n: number, min: number, max: number) => Math.min(Math.max(n, min), max);
+export const diag = (sides: PointArg) => {
+  const [a, b] = getPoint(sides);
+  return Math.sqrt(a * a + b * b);
+};
 
 // TODO: Maybe, split fns to "fast" and "handy".
 // Or maybe not (fast should be calculated separately then, without creating arrays)
@@ -94,6 +98,10 @@ export const point = {
     const sin = Math.sin(angle);
     const cos = Math.cos(angle);
     return [sin * (x - px) + cos * (y - py) + px, sin * (y - py) - cos * (x - px) + py];
+  },
+
+  rotBetween(a: Point, b: Point): number {
+    return Math.atan2(b[1] - a[1], b[0] - a[0]);
   },
 
   sizeToScale(currentSize: PointArg, targetSize: PointArg): Point {

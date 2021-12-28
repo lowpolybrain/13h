@@ -1,15 +1,34 @@
 // TODO: Make sure the class does not use its own getters
 
-import { point } from '../helpers';
-
+import { clamp, diag, point } from '../helpers';
 import { FillStyle, Corner, Corners, LineCap, StrokeStyle, Point, Shape, PointArg, Repeat } from '../types';
+import { makeListener } from './EventListener';
 
 interface Text<P> {
   (text: string | number, pos?: Point, fill?: FillStyle): P;
   center: this;
 }
 
+export class TempCanvas {
+  private _canvas: Canvas | undefined;
+  public get canvas(): Canvas {
+    if (!this._canvas) {
+      this._canvas = new Canvas();
+    }
+    return this._canvas;
+  }
+  public getCanvas(adjustSize?: Canvas): Canvas {
+    const canvas = this.canvas;
+    if (adjustSize && !point.eq(canvas.size, adjustSize.size)) {
+      canvas.setSize(adjustSize.size);
+    }
+    return canvas;
+  }
+}
+
 export class Canvas {
+  private tempCanvas = new TempCanvas();
+
   private strokeFill(fillStyle?: FillStyle, lineWidth?: number, strokeStyle?: StrokeStyle, closePath?: boolean) {
     if (closePath) this.context.closePath();
     if (lineWidth) this.context.lineWidth = lineWidth;
@@ -34,6 +53,7 @@ export class Canvas {
     return this._size;
   }
 
+  /** Basically [w - 1, h - 1] - coordinates of bottom right corner. */
   public get maxPoint(): Point {
     return this._maxPoint;
   }
@@ -53,6 +73,10 @@ export class Canvas {
   public get center(): Point {
     return this._center;
   }
+
+  public diag: number = 0;
+  public small: number = 0;
+  public big: number = 0;
 
   public getCorners(offsetHalf: boolean = false): Corners {
     const offset = offsetHalf ? 0.5 : 1;
@@ -88,12 +112,20 @@ export class Canvas {
     return this;
   }
 
-  public setSize([width, height]: Point): this {
-    this._size = [width, height];
-    this._maxPoint = [width ? width - 1 : 0, height ? height - 1 : 0];
-    this._center = [width / 2, height / 2];
-    this.element.width = width;
-    this.element.height = height;
+  public setSize(newSize: Point): this {
+    if (!point.eq(this._size, newSize)) {
+      const oldSize = this._size;
+      const [width, height] = newSize;
+      this._size = [width, height];
+      this._maxPoint = [width ? width - 1 : 0, height ? height - 1 : 0];
+      this._center = [width / 2, height / 2];
+      this.element.width = width;
+      this.element.height = height;
+      this.diag = diag(newSize);
+      this.small = width > height ? height : width;
+      this.big = width > height ? width : height;
+      this.onResize.fire(this, oldSize);
+    }
     return this;
   }
 
@@ -201,6 +233,17 @@ export class Canvas {
     return this.context.createPattern(element, repetition);
   }
 
+  public fade(fadeAmount: number = 0.1) {
+    const alpha = clamp(1 - fadeAmount, 0, 1);
+    if (alpha) {
+      const tempCanvas = this.tempCanvas.getCanvas(this);
+      // TODO: Take handle into account here (?)
+      this.draw(tempCanvas.clear(), this.pivot, 0, 1, alpha);
+      this.clear();
+      tempCanvas.draw(this, tempCanvas.pivot);
+    }
+  }
+
   public poly(
     shape: Shape,
     fillStyle?: FillStyle,
@@ -262,4 +305,5 @@ export class Canvas {
     //@ts-expect-error TODO: Learn how to make defineProperty work TS way.
     return textMaker;
   }
+  onResize = makeListener<[Canvas, Point]>();
 }

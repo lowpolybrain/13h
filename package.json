@@ -56,7 +56,8 @@
     "@13h/image": "./lib/image",
     "@13h/preload": "./lib/preload",
     "@13h/controls": "./lib/controls",
-    "@13h/bit": "./lib/bit"
+    "@13h/bit": "./lib/bit",
+    "@13h/dom": "./lib/dom"
   },
   "13h": {
     "linkedFolders": [

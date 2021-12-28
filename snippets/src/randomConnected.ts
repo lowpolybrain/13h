@@ -1,5 +1,5 @@
 import { point, random, color } from '@13h/core';
-import { makeCanvas, animate } from '../common';
+import { makeCanvas, animate } from './inc/boilerplate';
 
 const canvas = makeCanvas(1024);
 canvas.element.style.filter = 'blur(40px) brightness(2) contrast(140%) saturate(150%)';

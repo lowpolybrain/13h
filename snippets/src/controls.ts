@@ -1,7 +1,7 @@
 import { Point } from '@13h/core';
 import { MouseTracker } from '@13h/controls';
 
-import { makeCanvas, animate } from '../common';
+import { makeCanvas, animate } from './inc/boilerplate';
 import { point } from '@13h/core';
 
 const canvas = makeCanvas(128);

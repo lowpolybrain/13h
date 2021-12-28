@@ -63,6 +63,7 @@ export class BinaryMatrix {
     this._value = this._value.map((row) => [...row.slice(1), row[0]] as boolean[]);
   }
 
+  // TODO: Lower level SET (for mass operations)
   public set([x, y]: Point, newValue?: boolean) {
     const row = this.value[y];
     if (row) {
@@ -96,6 +97,17 @@ export class BinaryMatrix {
     this.forEach((v) => (bits += v ? '1' : '0'));
     return bits;
   };
+
+  public setValueFromBits = (bits: string): void => {
+    this.forEach((_, pos) => {
+      const bitIndex = pos[1] * this.size[0] + pos[0];
+      this.set(pos, bits[bitIndex] === '1');
+    });
+  };
+
+  public fill = (): void => this.forEach((v, pos) => this.set(pos, true));
+  public clear = (): void => this.forEach((v, pos) => this.set(pos, false));
+  public invert = (): void => this.forEach((v, pos) => this.set(pos, !v));
 
   public onChange = makeListener<[BinaryMatrix]>();
 }

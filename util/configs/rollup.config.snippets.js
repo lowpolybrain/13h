@@ -9,7 +9,7 @@ import nodeResolve from '@rollup/plugin-node-resolve';
 
 const files = glob.sync('../snippets/src/*.ts');
 
-const htmlBuilder = create({ pageTemplate: './ejs/page.ejs' });
+const htmlBuilder = create({ pageTemplate: './src/ejs/page.ejs' });
 
 const snippetBundles = files.map((fileName) => {
   const fileNameWithoutExtension = path.basename(fileName, '.ts');
@@ -18,7 +18,8 @@ const snippetBundles = files.map((fileName) => {
       nodeResolve(),
       typescript({rollupCommonJSResolveHack: true}),
       htmlBuilder.buildPage({
-        scripts: (page) => [`../js/${page.scriptName}.js`],
+        scripts: (page) => [`./js/${page.scriptName}.js`],
+        output: (page) => `./dist/${page.scriptName}.html`,
       }),
     ],
     input: fileName,

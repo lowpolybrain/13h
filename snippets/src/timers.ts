@@ -1,5 +1,5 @@
 import { point } from '@13h/core';
-import { makeCanvas, animate } from '../common';
+import { makeCanvas, animate } from './inc/boilerplate';
 
 const canvas = makeCanvas(256);
 

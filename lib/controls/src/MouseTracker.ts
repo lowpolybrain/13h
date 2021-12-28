@@ -20,7 +20,7 @@ export class MouseTracker {
     c.element.addEventListener('mousemove', this.mouseMove);
   }
 
-  public isMounted(): boolean {
+  public get isMounted(): boolean {
     return !!this.mountedCanvas;
   }
 
@@ -37,7 +37,10 @@ export class MouseTracker {
 
   private mouseMove = (e: MouseEvent) => {
     if (this.mountedCanvas) {
-      this.realPos = [e.offsetX, e.offsetY];
+      this.realPos = [
+        e.offsetX - this.mountedCanvas.element.offsetLeft,
+        e.offsetY - this.mountedCanvas.element.offsetTop,
+      ];
       this.pos = coordsToLocal(this.mountedCanvas, this.realPos);
     }
   };

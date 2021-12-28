@@ -1,7 +1,7 @@
 import { TWO_PI, color, RAD_TO_DEG } from '@13h/core';
 import { FlyingBounce } from '@13h/gimmicks';
 
-import { makeCanvas, animate } from '../common';
+import { makeCanvas, animate } from './inc/boilerplate';
 
 const canvas = makeCanvas(256);
 
