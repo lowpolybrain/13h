@@ -1,5 +1,5 @@
 import { BitMap } from '@13h/bit';
-import { animate, makeCanvas } from './inc/boilerplate';
+import { makeScene } from './inc/boilerplate';
 import { Canvas, random } from '@13h/core';
 
 const glyphs = [
@@ -12,20 +12,17 @@ const numbers = [442326, 158242, 923279, 923166, 150001, 1019678, 495510, 987716
 const mazeSegs = [
   35184508403720, 35184525180936, 35186714738696, 36354945847560
 ];
-const bitmaps = mazeSegs.map((number) => BitMap.fromNumber(number, [7, 7]));
-
-const canvas = makeCanvas(512, false).crisp();
-canvas.fill('#fff');
+const bitmaps = glyphs.map((number) => BitMap.fromNumber(number, [7, 7]));
 
 const scale = 2;
 const bitCanvas = new Canvas(7 * 32).crisp();
 const scaledCanvas = new Canvas(bitCanvas.width * scale).crisp();
 
-const padding = 0;
+const padding = 1;
 const [sx, sy] = bitmaps[0].size;
 
-animate((n) => {
-  if (!(n % 10 === 0)) return;
+makeScene((canvas, n) => {
+  if (!(n % 2 === 0)) return;
   bitCanvas.clear();
   for (let x = padding; x <= bitCanvas.width; x += sx + padding) {
     for (let y = padding; y <= bitCanvas.height; y += sy + padding) {
@@ -34,10 +31,10 @@ animate((n) => {
     }
   }
   scaledCanvas.clear();
-  bitCanvas.draw(scaledCanvas, undefined, 0, scale, 0.05);
+  bitCanvas.draw(scaledCanvas, undefined, 0, scale, 0.1);
   const pattern = canvas.createPattern(scaledCanvas);
   canvas.fill('#eee');
   if (pattern) {
     canvas.fill(pattern as CanvasPattern);
   }
-});
+})

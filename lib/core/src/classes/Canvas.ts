@@ -1,33 +1,17 @@
 // TODO: Make sure the class does not use its own getters
 
 import { clamp, diag, point } from '../helpers';
-import { FillStyle, Corner, Corners, LineCap, StrokeStyle, Point, Shape, PointArg, Repeat } from '../types';
+import { FillStyle, Corner, Corners, LineCap, StrokeStyle, Point, Shape, PointArg, Repeat, Sized } from '../types';
 import { makeListener } from './EventListener';
+import { Lazy } from './Lazy';
 
 interface Text<P> {
   (text: string | number, pos?: Point, fill?: FillStyle): P;
   center: this;
 }
 
-export class TempCanvas {
-  private _canvas: Canvas | undefined;
-  public get canvas(): Canvas {
-    if (!this._canvas) {
-      this._canvas = new Canvas();
-    }
-    return this._canvas;
-  }
-  public getCanvas(adjustSize?: Canvas): Canvas {
-    const canvas = this.canvas;
-    if (adjustSize && !point.eq(canvas.size, adjustSize.size)) {
-      canvas.setSize(adjustSize.size);
-    }
-    return canvas;
-  }
-}
-
-export class Canvas {
-  private tempCanvas = new TempCanvas();
+export class Canvas implements Sized {
+  private tempCanvas = new Lazy(() => new Canvas(1));
 
   private strokeFill(fillStyle?: FillStyle, lineWidth?: number, strokeStyle?: StrokeStyle, closePath?: boolean) {
     if (closePath) this.context.closePath();
@@ -112,7 +96,10 @@ export class Canvas {
     return this;
   }
 
-  public setSize(newSize: Point): this {
+  public setSize(newSize: Point | Sized): this {
+    if ('size' in newSize) {
+      newSize = newSize.size;
+    }
     if (!point.eq(this._size, newSize)) {
       const oldSize = this._size;
       const [width, height] = newSize;
@@ -233,15 +220,14 @@ export class Canvas {
     return this.context.createPattern(element, repetition);
   }
 
-  public fade(fadeAmount: number = 0.1) {
+  public fade(fadeAmount: number = 0.1): this {
     const alpha = clamp(1 - fadeAmount, 0, 1);
     if (alpha) {
-      const tempCanvas = this.tempCanvas.getCanvas(this);
-      // TODO: Take handle into account here (?)
-      this.draw(tempCanvas.clear(), this.pivot, 0, 1, alpha);
-      this.clear();
-      tempCanvas.draw(this, tempCanvas.pivot);
+      const temp = this.tempCanvas.value;
+      this.draw(temp.setSize(this).clear(), this.pivot);
+      temp.draw(this.clear(), temp.pivot, 0, 1, alpha);
     }
+    return this;
   }
 
   public poly(
