@@ -13,8 +13,15 @@ export const animate = (fn: (n: number, t: number) => void, opts?: AnimateOption
   anim(fn, { ...opts, cleanupId: 'main' });
 };
 
-export const makeScene = (fn: (c: Canvas, t: number) => void, opts?: AnimateOptions) => {
+export const makeScene = (
+  fn: (c: Canvas, t: number) => void,
+  opts?: AnimateOptions,
+  init?: (canvas: Canvas) => void
+) => {
   const canvas = makeCanvas(1);
+  if (init) {
+    init(canvas);
+  }
   animate((n) => {
     fitParent(canvas);
     fn(canvas, n);

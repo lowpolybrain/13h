@@ -1,11 +1,10 @@
 import { point, Point, random, SQR_TWO, osc, color } from '@13h/core';
 
-import { makeCanvas, animate } from './inc/boilerplate';
+import { makeScene } from './inc/boilerplate';
 
-const canvas = makeCanvas(2048);
 const count = 10000;
 
-animate((n: number) => {
+makeScene((canvas, n) => {
   canvas.fill('#00000016');
 
   for (let i = 0; i < count; i++) {
@@ -17,4 +16,4 @@ animate((n: number) => {
 
     canvas.dot(pos, color.hsl(idx * count + n * 0.1));
   }
-});
+}, {}, (c) => c.element.style.background = '#000')

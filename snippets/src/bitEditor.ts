@@ -95,7 +95,7 @@ class UI {
 
   private handleMouseEvent = (e: MouseEvent, click: Click) => {
     const localCoords = coordsToLocal(this.canvas, [e.offsetX, e.offsetY]);
-    if (point.insideRegion(localCoords, this.fieldPos, point.add(this.fieldPos, this.matrixEditor.canvasSize))) {
+    if (point.insideRect(localCoords, this.fieldPos, point.add(this.fieldPos, this.matrixEditor.canvasSize))) {
       const fieldLocalCoords = point.sub(localCoords, this.fieldPos);
       this.matrixEditor.handleClick(fieldLocalCoords, click);
       this.render();

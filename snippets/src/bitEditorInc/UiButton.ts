@@ -10,7 +10,7 @@ export class UiButton {
     canvas.text.center(this.text, point.addHalf(this.position, this.size), '#000');
   }
   public checkClick(clickPos: Point, mode: Click) {
-    if (mode === Click.Release && point.insideRegion(clickPos, this.position, point.add(this.position, this.size))) {
+    if (mode === Click.Release && point.insideRect(clickPos, this.position, point.add(this.position, this.size))) {
       this.onClick();
     }
   }
