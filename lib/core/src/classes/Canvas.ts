@@ -232,7 +232,7 @@ export class Canvas implements Sized {
 
   public poly(
     shape: Shape,
-    fillStyle?: FillStyle,
+    fillStyle: FillStyle = 'transparent',
     lineWidth: number = 1,
     strokeColor?: FillStyle,
     closePath: boolean = true,

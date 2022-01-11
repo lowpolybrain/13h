@@ -25,6 +25,10 @@ export const point = {
     const [x, y] = getPoint(b);
     return [point[0] + x / 2, point[1] + y / 2];
   },
+  subHalf(pnt: Point, b: PointArg = 1): Point {
+    const [x,y] = getPoint(b);
+    return point.addHalf(pnt, [-x, -y]);
+  },
   /** Check if point belongs to rectangular region */
   insideRect(point: Point, topLeft: PointArg, bottomRight: PointArg): boolean {
     const [sx, sy] = getPoint(topLeft);
