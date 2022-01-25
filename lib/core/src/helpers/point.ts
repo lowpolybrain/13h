@@ -26,7 +26,7 @@ export const point = {
     return [point[0] + x / 2, point[1] + y / 2];
   },
   subHalf(pnt: Point, b: PointArg = 1): Point {
-    const [x,y] = getPoint(b);
+    const [x, y] = getPoint(b);
     return point.addHalf(pnt, [-x, -y]);
   },
   /** Check if point belongs to rectangular region */
@@ -124,6 +124,9 @@ export const point = {
     return Math.atan2(b[1] - a[1], b[0] - a[0]);
   },
 
+  between(a: Point, b: Point): Point {
+    return [(a[0] + b[0]) / 2, (a[1] + b[1]) / 2];
+  },
 
   sizeToScale(currentSize: PointArg, targetSize: PointArg): Point {
     const cs = point.get(currentSize);

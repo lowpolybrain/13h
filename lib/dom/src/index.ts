@@ -5,3 +5,4 @@ export * from './assignProps';
 export * from './fitParent';
 
 export * from './types';
+export * from './domReady';

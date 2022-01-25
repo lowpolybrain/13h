@@ -1,4 +1,4 @@
-import { Point } from '@13h/core';
+import { Point } from './point';
 
 export interface Sized {
   size: Point;

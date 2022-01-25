@@ -18,7 +18,7 @@ const snippetBundles = files.map((fileName) => {
     plugins: [
       nodeResolve(),
       typescript({rollupCommonJSResolveHack: true}),
-      terser(),
+      // terser(),
       htmlBuilder.buildPage({
         scripts: (page) => [`./js/${page.scriptName}.js`],
         output: (page) => `./dist/${page.scriptName}.html`,

@@ -6,3 +6,4 @@ export * from './shape';
 export * from './point';
 
 export * from './random';
+export * from './angles';
